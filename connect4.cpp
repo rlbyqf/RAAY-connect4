@@ -17,6 +17,7 @@ int main()
 			//cout << A[i][j]<<endl;
 		}
 	print_board(A);
+	get_name();
 	make_move(A,player);
 	player++;
 	make_move(A,player);
