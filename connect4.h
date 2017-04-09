@@ -30,7 +30,7 @@ string get_name()
 int make_move(int A[6][7],int player)
 {
 	int choice;
-	cout<<"Please choose a column, numbered from left to right, to place a piece:"<<endl;
+	cout << playerOne << ", please choose a column, numbered from left to right, to place a piece:"<<endl;
 	cin >> choice;
 	choice--;
 	if(A[0][choice] == 1)
