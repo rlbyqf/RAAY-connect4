@@ -1,6 +1,8 @@
 #include <iostream>
 using namespace std;
 
+string playerOne, playerTwo;
+
 int print_board(int A[6][7])
 {
 	for(int i=0;i<6;i++)
@@ -15,9 +17,7 @@ int print_board(int A[6][7])
 }
 
 string get_name()
-{
-	string playerOne, playerTwo;
-	
+{	
 	cout << "Please enter Player 1's name: ";
 	cin >> playerOne;
 	cout << "Please enter Player 2's name: "; 
