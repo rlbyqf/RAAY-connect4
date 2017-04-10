@@ -27,7 +27,7 @@ string get_name()
 }
 
 
-int make_moveOne(int A[6][7],int player)
+int make_move(int A[6][7],int player)
 {
 	int choice;
 	cout << playerOne << ", please choose a column, numbered from left to right, to place a piece:"<<endl;
@@ -36,7 +36,7 @@ int make_moveOne(int A[6][7],int player)
 	if(A[0][choice] == 1)
 	{
 		cout << "That column is full: please choose another column:"<<endl;
-		make_moveOne(A,player);
+		make_move(A,player);
 	}
 	else 
 	{
@@ -55,7 +55,7 @@ int make_moveOne(int A[6][7],int player)
 }
 
 
-int make_moveTwo(int A[6][7],int player)
+/*int make_moveTwo(int A[6][7],int player)
 {
 	int choice;
 	cout << playerTwo << ", please choose a column, numbered from left to right, to place a piece:"<<endl;
@@ -81,3 +81,4 @@ int make_moveTwo(int A[6][7],int player)
 	}
 	return 0;
 }
+*/
