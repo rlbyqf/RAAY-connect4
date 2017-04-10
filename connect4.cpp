@@ -2,9 +2,6 @@
 #include "connect4.h"
 using namespace std;
 
-
-
-
 int main()
 {
 	int A[6][7];
