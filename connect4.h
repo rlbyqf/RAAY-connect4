@@ -11,7 +11,7 @@ int print_board(int A[6][7])
 			cout << A[i][j]<<" ";
 		}
 	}
-	cout << endl;
+	cout << endl << endl;
 }
 
 string get_name()
@@ -36,7 +36,7 @@ int make_moveOne(int A[6][7],int player)
 	if(A[0][choice] == 1)
 	{
 		cout << "That column is full: please choose another column:"<<endl;
-		make_move(A,player);
+		make_moveOne(A,player);
 	}
 	else 
 	{
@@ -64,7 +64,7 @@ int make_moveTwo(int A[6][7],int player)
 	if(A[0][choice] == 1)
 	{
 		cout << "That column is full: please choose another column:"<<endl;
-		make_move(A,player);
+		make_moveTwo(A,player);
 	}
 	else 
 	{
