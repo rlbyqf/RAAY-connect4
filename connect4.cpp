@@ -15,17 +15,17 @@ int main()
 		}
 	print_board(A);
 	get_name();
-	make_moveOne(A,player);
+	make_move(A,player);
 	player++;
-	make_moveOne(A,player);
+	make_move(A,player);
 	player--;
-	make_moveOne(A,player);
-	make_moveTwo(A,player);
+	make_move(A,player);
+	/*make_moveTwo(A,player);
 	player++;
 	make_moveTwo(A,player);
 	player--;
 	make_moveTwo(A,player);
-	
+	*/
 	return 0;
 }
 
