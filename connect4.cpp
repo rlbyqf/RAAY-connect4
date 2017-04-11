@@ -5,7 +5,8 @@ using namespace std;
 int main()
 {
 	int A[6][7];
-	int player=1;
+	string one,two;
+	int check=1;
 	
 	for(int i=0;i<6;i++)
 		for (int j=0;j<7;j++)
@@ -14,12 +15,17 @@ int main()
 			//cout << A[i][j]<<endl;
 		}
 	print_board(A);
-	get_name();
-	make_move(A,player);
-	player++;
-	make_move(A,player);
-	player--;
-	make_move(A,player);
+	get_name(one,two);
+	
+	
+	while(1)
+	{
+		make_move(A,one,1);
+		//win_case(A,1,one);
+		make_move(A,two,2);
+		//win_case(A,2,two);
+	}
+	
 	/*make_moveTwo(A,player);
 	player++;
 	make_moveTwo(A,player);
