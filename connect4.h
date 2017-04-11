@@ -1,4 +1,7 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+
 using namespace std;
 
 
@@ -41,7 +44,7 @@ int make_move(int A[6][7],string player,int check)
 	}
 	else 
 	{
-		for(int i=5;i>0;i--)
+		for(int i = 5; i >= 0;i--)
 		{
 			if(A[i][choice]==0)
 			{
@@ -90,63 +93,67 @@ int make_move(int A[6][7],string player,int check)
 }
 */
 
-
-bool win_case(int board[6][7], int char_piece, string player)
+bool win_case(int board[6][7], int char_piece, string player) // standard connect 4 board is 6x7
 {
 	bool winCase = false;
 //6 row 7 column
 
 // horizontal win
-	for(int row = 0; row < 6; row++)
+if(!winCase)
+	for(int row = 0; row <= 5; row++)
 	{
-		for(int col = 0; col < 4; col++)
+		for(int col = 0; col <=3; col++)
 		{
 			if(board[row][col] == char_piece && board[row][col+1] == char_piece && board[row][col+2] == char_piece && board[row][col+3] == char_piece)
 			{
-				cout << player << " wins!" << endl;
-				winCase = true;
-			}
-		}
-	}
-	
-// vertical win
-	for(int col = 0; col < 7; col++)
-	{
-		for(int row = 0; row < 3; row++)
-		{
-			if(board[row][col] == char_piece && board[row+1][col] == char_piece && board[row+2][col] == char_piece && board[row+3][col] == char_piece)
-			{
-				cout << player << " wins!" << endl;
-				winCase = true;
-			}
-		}
-	}
-	
-// diagonal win 
-	for(int col = 0; col < 4; col++)
-	{
-		for(int row = 0; row < 3; row--)
-		{
-			if(board[row][col] == char_piece && board[row+1][col+1] == char_piece && board[row+2][col+2] == char_piece && board[row+3][col+3] == char_piece)
-			{
-				cout << player << " wins!" << endl;
+				cout << player << " wins! 1" << endl;
 				winCase = true;
 			}
 		}
 	}
 
-// diagonal win
-	for(int col = 6; col > 2; col--)
+if(!winCase)
+// vertical win
+	for(int col = 0; col <= 6; col++)
 	{
-		for(int row = 5; row > 2; row--)
+		for(int row = 0; row <= 2; row++)
 		{
-			if(board[row][col] == char_piece && board[row-1][col-1] == char_piece && board[row-2][col-2] == char_piece && board[row-3][col-3] == char_piece)
+			if(board[row][col] == char_piece && board[row+1][col] == char_piece && board[row+2][col] == char_piece && board[row+3][col] == char_piece)
 			{
-				cout << player << " wins!" << endl;
+				cout << player << " wins! 2" << endl;
+				winCase = true;
+			}
+		}
+	}
+
+if(!winCase)
+// diagonal win 
+	for(int col = 0; col <= 3; col++)
+	{
+		for(int row = 0; row <= 2; row++)
+		{
+			if(board[row][col] == char_piece && board[row+1][col+1] == char_piece && board[row+2][col+2] == char_piece && board[row+3][col+3] == char_piece)
+			{
+				cout << player << " wins! 3" << endl;
+				winCase = true;
+			}
+		}
+	}
+
+if(!winCase)
+// diagonal win
+	for(int col = 6; col >= 3; col--)
+	{
+		for(int row = 0; row <= 2; row++)
+		{
+			if(board[row][col] == char_piece && board[row+1][col-1] == char_piece && board[row+2][col-2] == char_piece && board[row+3][col-3] == char_piece)
+			{
+				cout << player << " wins! 4" << endl;
 				winCase = true;
 			}
 		}
 	}
 	
+	// return true if there is a winning case
 	return winCase;
 }
