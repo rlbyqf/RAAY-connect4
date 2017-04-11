@@ -19,16 +19,19 @@ int print_board(int A[6][7])
 	cout << endl << endl;
 }
 
-string get_name(string one, string two)
+string get_name(string one)
 {	
 	cout << "Please enter Player 1's name: ";
 	cin >> one;
-	cout << "Please enter Player 2's name: "; 
-	cin >> two;
-	
-	return one,two;
+	return one;
 }
 
+string get_name2(string two)
+{
+	cout << "Please enter Player 2's name: "<<endl;
+	cin >> two;
+	return two;
+}
 
 
 int make_move(int A[6][7],string player,int check)
