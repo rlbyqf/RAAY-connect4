@@ -34,7 +34,10 @@ string printwinner(string player)
 	return player;
 }
 
-
+void printincorrectchoice()
+{
+	cout << "Please choose a column number between 1 and 7: " << endl; 
+}
 
 
 

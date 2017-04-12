@@ -39,16 +39,28 @@ string get_name2(string two)
 int make_move(int A[6][7],string player,int check)
 {
 	int choice;
-	
 	sendstringmessage(player);
 	cin >> choice;
 	choice--;
-	if(A[0][choice] == 1)
+	if(A[0][choice] == 1 || A[0][choice == 2])
 	{
 		
 		command(3);
 		make_move(A,player,check);
+		return 0;
 	}
+	if(choice > 6 || choice < 0)
+	{
+		command(5);
+		make_move(A,player,check);
+		return 0;
+	}
+	if(choice == 8)
+		{
+			command(5);
+			make_move(A,player,check);
+			return 0;
+		}
 	else 
 	{
 		for(int i = 5; i >= 0;i--)

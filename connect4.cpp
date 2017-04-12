@@ -17,9 +17,8 @@ int main()
 			
 		}
 	print_board(A);
-	get_name(one);
-	get_name2(two);
-	
+	one = get_name(one);
+	two = get_name2(two);
 	while(!win)
 	{
     if(!win)
