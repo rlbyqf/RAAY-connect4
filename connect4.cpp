@@ -14,11 +14,11 @@ int main()
 		for (int j=0;j<7;j++)
 		{
 			A[i][j]=0;
-			//cout << A[i][j]<<endl;
+			
 		}
 	print_board(A);
-	get_name(one,two);
-	//cout << one << two; this was for testing
+	get_name(one);
+	get_name2(two);
 	
 	while(!win)
 	{

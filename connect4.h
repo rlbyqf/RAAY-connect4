@@ -19,12 +19,11 @@ void print_board(int A[6][7])
 	cout << endl << endl;
 }
 
-void get_name(string& one, string& two)
+string get_name(string& one)
 {	
 	
 	command(1);
 	cin >> one;
-<<<<<<< HEAD
 	return one;
 }
 
@@ -33,11 +32,7 @@ string get_name2(string two)
 	command(2);
 	cin >> two;
 	return two;
-=======
-  cout << "Please enter Player 2's name: ";
-  cin >> two;
-  return;
->>>>>>> origin/master
+
 }
 
 
@@ -119,11 +114,11 @@ if(!winCase)
 		{
 			if(board[row][col] == char_piece && board[row][col+1] == char_piece && board[row][col+2] == char_piece && board[row][col+3] == char_piece)
 			{
-<<<<<<< HEAD
+
 				sendwinner(player);
-=======
-				cout << player << " wins!" << endl;
->>>>>>> origin/master
+
+			
+
 				winCase = true;
 			}
 		}
@@ -137,11 +132,8 @@ if(!winCase)
 		{
 			if(board[row][col] == char_piece && board[row+1][col] == char_piece && board[row+2][col] == char_piece && board[row+3][col] == char_piece)
 			{
-<<<<<<< HEAD
 				sendwinner(player);
-=======
-				cout << player << " wins!" << endl;
->>>>>>> origin/master
+			
 				winCase = true;
 			}
 		}
@@ -155,11 +147,8 @@ if(!winCase)
 		{
 			if(board[row][col] == char_piece && board[row+1][col+1] == char_piece && board[row+2][col+2] == char_piece && board[row+3][col+3] == char_piece)
 			{
-<<<<<<< HEAD
 				sendwinner(player);
-=======
-				cout << player << " wins!" << endl;
->>>>>>> origin/master
+				
 				winCase = true;
 			}
 		}
@@ -173,11 +162,8 @@ if(!winCase)
 		{
 			if(board[row][col] == char_piece && board[row+1][col-1] == char_piece && board[row+2][col-2] == char_piece && board[row+3][col-3] == char_piece)
 			{
-<<<<<<< HEAD
 				sendwinner(player);
-=======
-				cout << player << " wins!" << endl;
->>>>>>> origin/master
+				
 				winCase = true;
 			}
 		}
