@@ -17,8 +17,7 @@ int main()
 			//cout << A[i][j]<<endl;
 		}
 	print_board(A);
-	one = get_name(one);
-	two = get_name2(two);
+	get_name(one,two);
 	//cout << one << two; this was for testing
 	
 	while(!win)
