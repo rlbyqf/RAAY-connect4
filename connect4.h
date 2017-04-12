@@ -1,12 +1,12 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "Controller.h"
 using namespace std;
 
 
 
-int print_board(int A[6][7])
+void print_board(int A[6][7])
 {
 	for(int i=0;i<6;i++)
 	{
@@ -21,14 +21,15 @@ int print_board(int A[6][7])
 
 string get_name(string one)
 {	
-	cout << "Please enter Player 1's name: ";
+	
+	command(1);
 	cin >> one;
 	return one;
 }
 
 string get_name2(string two)
 {
-	cout << "Please enter Player 2's name: "<<endl;
+	command(2);
 	cin >> two;
 	return two;
 }
@@ -37,12 +38,14 @@ string get_name2(string two)
 int make_move(int A[6][7],string player,int check)
 {
 	int choice;
-	cout << player << ", please choose a column, numbered from left to right, to place a piece:"<<endl;
+	
+	sendstringmessage(player);
 	cin >> choice;
 	choice--;
 	if(A[0][choice] == 1)
 	{
-		cout << "That column is full: please choose another column:"<<endl;
+		
+		command(3);
 		make_move(A,player,check);
 	}
 	else 
@@ -56,7 +59,8 @@ int make_move(int A[6][7],string player,int check)
 					check++;
 				if(check==2)
 					check--;
-				cout << "The move was successful!"<<endl;
+				
+				command(4);
 				print_board(A);
 				
 				return check;
@@ -109,7 +113,7 @@ if(!winCase)
 		{
 			if(board[row][col] == char_piece && board[row][col+1] == char_piece && board[row][col+2] == char_piece && board[row][col+3] == char_piece)
 			{
-				cout << player << " wins! 1" << endl;
+				sendwinner(player);
 				winCase = true;
 			}
 		}
@@ -123,7 +127,7 @@ if(!winCase)
 		{
 			if(board[row][col] == char_piece && board[row+1][col] == char_piece && board[row+2][col] == char_piece && board[row+3][col] == char_piece)
 			{
-				cout << player << " wins! 2" << endl;
+				sendwinner(player);
 				winCase = true;
 			}
 		}
@@ -137,7 +141,7 @@ if(!winCase)
 		{
 			if(board[row][col] == char_piece && board[row+1][col+1] == char_piece && board[row+2][col+2] == char_piece && board[row+3][col+3] == char_piece)
 			{
-				cout << player << " wins! 3" << endl;
+				sendwinner(player);
 				winCase = true;
 			}
 		}
@@ -151,7 +155,7 @@ if(!winCase)
 		{
 			if(board[row][col] == char_piece && board[row+1][col-1] == char_piece && board[row+2][col-2] == char_piece && board[row+3][col-3] == char_piece)
 			{
-				cout << player << " wins! 4" << endl;
+				sendwinner(player);
 				winCase = true;
 			}
 		}

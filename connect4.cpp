@@ -1,5 +1,6 @@
 #include <iostream>
 #include "connect4.h"
+
 using namespace std;
 
 int main()
