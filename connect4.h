@@ -42,7 +42,8 @@ int make_move(int A[6][7],string player,int check)
 	sendstringmessage(player);
 	cin >> choice;
 	choice--;
-	if(A[0][choice] == 1 || A[0][choice == 2])
+	
+	if(A[0][choice] !=0)
 	{
 		
 		command(3);

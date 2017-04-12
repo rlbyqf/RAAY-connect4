@@ -12,6 +12,7 @@ int command(int x)
 		printsuccessfullmove();
 	if(x==5)
 		printincorrectchoice();
+	return 0;
 }
 
 string sendstringmessage(string player)
