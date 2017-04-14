@@ -7,7 +7,7 @@ int main()
 	int A[6][7];
 	string one,two;
 	int check=1;
-  bool win = false;
+  	bool win = false;
 
 	for(int i=0;i<6;i++)
 		for (int j=0;j<7;j++)
@@ -20,28 +20,16 @@ int main()
 	two = get_name2(two);
 	while(!win)
 	{
-    if(!win)
-    {
+    		if(!win)
+    		{
 		  make_move(A,one,1);
-	  	win = win_case(A,1,one);
-    }
-    if(!win)
-    {		
-    make_move(A,two,2);
-		win = win_case(A,2,two);
-    }
+	  	  win = win_case(A,1,one);
+    		}
+    		if(!win)
+    		{		
+    		  make_move(A,two,2);
+		  win = win_case(A,2,two);
+    		}
 	}
-	
-	/*make_moveTwo(A,player);
-	player++;
-	make_moveTwo(A,player);
-	player--;
-	make_moveTwo(A,player);
-	*/
 	return 0;
 }
-
-
-
-
-
