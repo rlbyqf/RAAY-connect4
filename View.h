@@ -14,18 +14,18 @@ void printplayertwo()
 
 string printplayermessage(string player)
 {
-	cout << player << ", please choose a column, numbered from left to right, to place a piece:"<<endl;
+	cout << player << ", please choose a column, numbered from left to right, to place a piece:" << endl;
 	return player;
 }
 
 void printfullmessage()
 {
-	cout << "That column is full: please choose another column:"<<endl;
+	cout << "That column is full: please choose another column:" << endl;
 }
 
 void printsuccessfullmove()
 {
-	cout << "The move was successful!"<<endl;
+	cout << "The move was successful!" << endl;
 }
 
 string printwinner(string player)
@@ -38,7 +38,3 @@ void printincorrectchoice()
 {
 	cout << "Please choose a column number between 1 and 7: " << endl; 
 }
-
-
-
-
