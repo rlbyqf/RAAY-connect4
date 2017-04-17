@@ -1,7 +1,4 @@
-#include "stdafx.h"
 #include "CppUnitTest.h"
-#include "connect4.h"
-//#include "Controller.cpp"
 #include "View.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
