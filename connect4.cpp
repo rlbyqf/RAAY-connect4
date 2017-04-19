@@ -425,6 +425,52 @@ int main()
                  
             case MATCH:
                  //showMatch();
+                 int player1wins = 0;
+				 int player2wins = 0;
+				 int gameNum = 0;
+				 
+				 print_board(A);
+				 one = get_name(one);
+	             two = get_name2(two);
+	             
+				 while((player1wins != 2 && player2wins !=2) && gameNum != 3)
+				 {
+				 	 win = false;
+				 	for(int i=0;i<6;i++)
+					{	
+					for (int j=0;j<7;j++)
+						{
+							A[i][j]=0;		
+						}
+					}
+				 	 while(!win)
+				 	 {
+				 		 if(!win)
+				 		 {
+				 			make_move(A,one,1);
+				 			win = win_case(A,1,one);
+				 			if(win)
+				 				player1wins++;
+						 }
+						 if(!win)
+						 {
+						 	make_move(A,two,2);
+						 	win = win_case(A,2,two);
+						 		if(win)
+						 			player2wins++;
+						 }
+					 }
+					 gameNum++;
+				 }
+				 if(player1wins == 2 || player2wins ==2 || gameNum == 3)
+				 {
+				 	if(player1wins == 2)
+				 		cout << one << " wins the match!" << endl;
+				 	else if(player2wins == 2)
+				 		cout << two << " wins the match!" << endl;
+				 	else
+				 		cout << "Draw" << endl;
+				 }
                  break;
         }
       }
