@@ -1,6 +1,7 @@
 #include "connect4.h"
 #include "Controller.cpp"
 #include "View.cpp"
+#include "time.h"
 //welcome fucntion
 void showWelcome() {
 	cout << "\n\tWelcome to Team RAAY's Connect4 Play Station!" << endl;
@@ -11,9 +12,9 @@ void showMenu()
 {
 	cout << "1. Start Playing" << endl
 		<< "2. Show Leaderboard" << endl
-		<< "3. Redefine usernames" << endl
-		<< "4. Match" << endl
-		<< "5. Exit" << endl << endl
+		//<< "3. Redefine usernames" << endl
+		<< "3. Match" << endl
+		<< "4. Exit" << endl << endl
 		<< "Please select an option:";
 }
 
@@ -190,10 +191,10 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 				{
 					A[i-3][j]=2;
 					print_board(A);
-					winning=win_case(A,2,player);
+					winning=win_case(A,2,"Computer");
 					if(winning)
 					{
-						cout << " Computer has won!" << endl;
+						//cout << " Computer has won!" << endl;
 						return 0;
 					}
 					human_turn(A,player);
@@ -209,10 +210,10 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 				{
 					A[row][col+3] = 2;
 					print_board(A);
-					winning=win_case(A,2,player);
+					winning=win_case(A,2,"Computer");
 					if(winning)
 					{
-						cout << " Computer has won!" << endl;
+						//cout << " Computer has won!" << endl;
 						return 0;
 					}
 					human_turn(A,player);			
@@ -228,10 +229,10 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 				{
 					A[i+3][j+3]=2;
 					print_board(A);
-					winning=win_case(A,2,player);
+					winning=win_case(A,2,"Computer");
 					if(winning)
 					{
-						cout << " Computer has won!" << endl;
+						//cout << " Computer has won!" << endl;
 						return 0;
 					}
 					human_turn(A,player);
@@ -246,10 +247,10 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 				{
 					A[i+3][j-3]=2;
 					print_board(A);
-					winning=win_case(A,2,player);
+					winning=win_case(A,2,"Computer");
 					if(winning)
 					{
-						cout << " Computer has won!" << endl;
+						//cout << " Computer has won!" << endl;
 						return 0;
 					}
 					human_turn(A,player);
@@ -268,10 +269,10 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 		{
 			A[i][choice]=2;
 			print_board(A);
-			winning=win_case(A,2,player);
+			winning=win_case(A,2,"Computer");
 			if(winning)
 			{
-				cout << " Computer has won!" << endl;
+				//cout << " Computer has won!" << endl;
 				return 0;
 			}
 			human_turn(A,player);
@@ -324,7 +325,7 @@ int human_turn(int A[6][7],string player)
 				winning=win_case(A,1,player);
 				if(winning)
 				{
-					cout << player << " has won!" << endl;
+					//cout << player << " has won!" << endl;
 					return 0;
 				}
 				computer_turn(A,player);
@@ -359,9 +360,9 @@ int main()
 	// constants for menu options
 	const int PLAY_CONNECT4 = 1;
 	const int SHOW_LEADERBOARD = 2;
-	const int REDEFINE_USERNAMES = 3;
-	const int MATCH = 4;
-	const int EXIT = 5;
+	//const int REDEFINE_USERNAMES = 3;
+	const int MATCH = 3;
+	const int EXIT = 4;
 	
 	cout << fixed << showpoint << setprecision(1); //sets to 1 decimal place
 	
@@ -383,11 +384,19 @@ int main()
         switch (option)
         {
             case PLAY_CONNECT4:
+            	for(int i=0;i<6;i++)
+				{		
+					for (int j=0;j<7;j++)
+					{
+						A[i][j]=0;		
+					}
+				}
                 print_board(A);
 				mode=player_mode(mode);
 				
                 if (mode == 1)//mode 1- two players
                 {
+                	win = false;
                   	one = get_name(one);
 	                two = get_name2(two);
                     while(!win)
@@ -419,12 +428,65 @@ int main()
                  //showLeaderboard()
                  break;
                  
-            case REDEFINE_USERNAMES:
+            /*case REDEFINE_USERNAMES:
                  //redefineUsernames();
                  break;  
-                 
+              */   
             case MATCH:
                  //showMatch();
+                 int player1wins = 0;
+				 int player2wins = 0;
+				 int gameNum = 0;
+				 
+				 for(int i=0;i<6;i++)
+					{	
+					for (int j=0;j<7;j++)
+						{
+							A[i][j]=0;		
+						}
+					}
+				 print_board(A);
+				 one = get_name(one);
+	             two = get_name2(two);
+	             
+				 while((player1wins != 2 && player2wins !=2) && gameNum != 3)
+				 {
+				 	 win = false;
+				 	 for(int i=0;i<6;i++)
+					{	
+					for (int j=0;j<7;j++)
+						{
+							A[i][j]=0;		
+						}
+					}
+				 	 while(!win)
+				 	 {
+				 		 if(!win)
+				 		 {
+				 			make_move(A,one,1);
+				 			win = win_case(A,1,one);
+				 			if(win)
+				 				player1wins++;
+						 }
+						 if(!win)
+						 {
+						 	make_move(A,two,2);
+						 	win = win_case(A,2,two);
+						 		if(win)
+						 			player2wins++;
+						 }
+					 }
+					 gameNum++;
+				 }
+				 if(player1wins == 2 || player2wins ==2 || gameNum == 3)
+				 {
+				 	if(player1wins == 2)
+				 		cout << one << " wins the match!" << endl;
+				 	else if(player2wins == 2)
+				 		cout << two << " wins the match!" << endl;
+				 	else
+				 		cout << "Draw" << endl;
+				 }
                  break;
         }
       }
