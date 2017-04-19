@@ -34,5 +34,6 @@ bool computer_turn(int A[6][7],string player);
 
 int human_turn(int A[6][7],string player);
 
+int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, int& games, bool win); // plays individual games in match and returns 1 or 2 depending on which player wins and a 3 for tie
 
 #endif

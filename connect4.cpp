@@ -336,8 +336,42 @@ int human_turn(int A[6][7],string player)
 	return 0;
 }
 
+int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, int& games, bool win)
+{
+	int winner; 
+	while(!win)
+	{
+		if(!win)
+		{
+			make_move(A,one,1);
+			win = win_case(A,1,one);
+			if(win)
+			{
+				oneWins++;
+				winner = 1;
+			}
+		}
+		if(!win)
+		{
+			make_move(A,two,2);
+			win = win_case(A,2,two);
+			if(win)
+			{
+				twoWins++;
+				winner = 2;
+			}
+		}	
+	}
+	games++;
+	return winner;
+}
 
 
+/*---------------------------------------------------------------
+
+						END FUNCTIONS
+
+---------------------------------------------------------------*/
 
 
 int main()
@@ -459,24 +493,7 @@ int main()
 							A[i][j]=0;		
 						}
 					}
-				 	 while(!win)
-				 	 {
-				 		 if(!win)
-				 		 {
-				 			make_move(A,one,1);
-				 			win = win_case(A,1,one);
-				 			if(win)
-				 				player1wins++;
-						 }
-						 if(!win)
-						 {
-						 	make_move(A,two,2);
-						 	win = win_case(A,2,two);
-						 		if(win)
-						 			player2wins++;
-						 }
-					 }
-					 gameNum++;
+				 	 showMatch(A,one,two,player1wins,player2wins,gameNum,win);
 				 }
 				 if(player1wins == 2 || player2wins ==2 || gameNum == 3)
 				 {
