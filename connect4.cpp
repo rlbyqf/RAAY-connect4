@@ -2,6 +2,9 @@
 #include "Controller.cpp"
 #include "View.cpp"
 #include "time.h"
+#include <iostream>
+#include <fstream>
+
 //welcome fucntion
 void showWelcome() {
 	cout << "\n\tWelcome to Team RAAY's Connect4 Play Station!" << endl;
@@ -482,7 +485,7 @@ int main()
                 break;
                                                    
             case SHOW_LEADERBOARD:
-                 showLeaderboard()
+                 showLeaderboard(scoreboard, playerboard);
                  break;
                  
             /*case REDEFINE_USERNAMES:
@@ -535,4 +538,3 @@ int main()
 	myfile.close();
 	return 0;
 }
-
