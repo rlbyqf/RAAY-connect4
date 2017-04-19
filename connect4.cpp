@@ -171,19 +171,13 @@ bool win_case(int board[6][7], int char_piece, string player) // standard connec
 }
 
 
-
-
 bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 {
 	srand(time(NULL));
 	bool winning=false;
 	bool winCase = false;
 	cout << "computer's turn: " << endl;
-	
-	
-	
-	
-	if(!winCase) //vertical
+if(!winCase) //vertical
 	{
 		for(int i=5;i>2;i--)
 			for(int j=0;j<7;j++)
@@ -201,14 +195,14 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 					return 0;
 				}
 	}
-	else if(!winCase) //horizontal right
-		for(int row = 0; row <= 5; row++)
+	if(!winCase) //horizontal
+		for(int i = 0; i < 6; i++)
 		{
-			for(int col = 0; col <=3; col++)
+			for(int j = 0; j < 4; j++)
 			{
-				if((A[row][col] == 1 && A[row][col+1] == 1 && A[row][col+2] == 1)&&A[row][col+3]==0)
+				if(A[i][j]==1&&A[i][j+1]==1&&A[i][j+2]==1&&A[i][j+3]==0)
 				{
-					A[row][col+3] = 2;
+					A[i][j+3] = 2;
 					print_board(A);
 					winning=win_case(A,2,"Computer");
 					if(winning)
@@ -221,7 +215,7 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 				}
 			}
 		}
-	else if(!winCase) //diagnal right
+	if(!winCase) //diagnal right
 	{
 		for(int i=5;i>2;i--)
 			for(int j=0;j<4;j++)
@@ -239,7 +233,7 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 					return 0;
 				}
 	}
-	else if(!winCase) // diagnal left
+	if(!winCase) // diagnal left
 	{
 		for(int i=5;i>2;i--)
 			for(int j=3;j<7;j++)
@@ -280,7 +274,6 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 		}
 	}
 	
-
 
 	return 0;
 }
@@ -335,6 +328,8 @@ int human_turn(int A[6][7],string player)
 	}
 	return 0;
 }
+
+
 
 int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, int& games, bool win)
 {
