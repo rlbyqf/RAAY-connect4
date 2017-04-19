@@ -1,5 +1,6 @@
 #include "connect4.h"
-
+#include "Controller.cpp"
+#include "View.cpp"
 //welcome fucntion
 void showWelcome() {
 	cout << "\n\tWelcome to Team RAAY's Connect4 Play Station!" << endl;
@@ -167,6 +168,177 @@ bool win_case(int board[6][7], int char_piece, string player) // standard connec
 	// return true if there is a winning case
 	return winCase;
 }
+
+
+
+
+bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
+{
+	srand(time(NULL));
+	bool winning=false;
+	bool winCase = false;
+	cout << "computer's turn: " << endl;
+	
+	
+	
+	
+	if(!winCase) //vertical
+	{
+		for(int i=5;i>2;i--)
+			for(int j=0;j<7;j++)
+				if(A[i][j]==1&&A[i-1][j]==1&&A[i-2][j]==1&&A[i-3][j]==0)
+				{
+					A[i-3][j]=2;
+					print_board(A);
+					winning=win_case(A,2,player);
+					if(winning)
+					{
+						cout << " Computer has won!" << endl;
+						return 0;
+					}
+					human_turn(A,player);
+					return 0;
+				}
+	}
+	else if(!winCase) //horizontal right
+		for(int row = 0; row <= 5; row++)
+		{
+			for(int col = 0; col <=3; col++)
+			{
+				if((A[row][col] == 1 && A[row][col+1] == 1 && A[row][col+2] == 1)&&A[row][col+3]==0)
+				{
+					A[row][col+3] = 2;
+					print_board(A);
+					winning=win_case(A,2,player);
+					if(winning)
+					{
+						cout << " Computer has won!" << endl;
+						return 0;
+					}
+					human_turn(A,player);			
+					return 0;
+				}
+			}
+		}
+	else if(!winCase) //diagnal right
+	{
+		for(int i=5;i>2;i--)
+			for(int j=0;j<4;j++)
+				if(A[i][j]==1&&A[i+1][j+1]==1&&A[i+2][j+2]==1&&A[i+3][j+3]==0)
+				{
+					A[i+3][j+3]=2;
+					print_board(A);
+					winning=win_case(A,2,player);
+					if(winning)
+					{
+						cout << " Computer has won!" << endl;
+						return 0;
+					}
+					human_turn(A,player);
+					return 0;
+				}
+	}
+	else if(!winCase) // diagnal left
+	{
+		for(int i=5;i>2;i--)
+			for(int j=3;j<7;j++)
+				if(A[i][j]==1&&A[i+1][j-1]==1&&A[i+2][j-2]==1&&A[i+3][j-3]==0)
+				{
+					A[i+3][j-3]=2;
+					print_board(A);
+					winning=win_case(A,2,player);
+					if(winning)
+					{
+						cout << " Computer has won!" << endl;
+						return 0;
+					}
+					human_turn(A,player);
+					return 0;
+				}
+	}
+	
+	
+	//cout << "made it";
+	int choice = rand() % 7 + 1;
+	choice--;
+	//cout << choice;
+	for(int i = 5; i >= 0;i--)
+	{
+		if(A[i][choice]==0)
+		{
+			A[i][choice]=2;
+			print_board(A);
+			winning=win_case(A,2,player);
+			if(winning)
+			{
+				cout << " Computer has won!" << endl;
+				return 0;
+			}
+			human_turn(A,player);
+			return 0;
+		}
+	}
+	
+
+
+	return 0;
+}
+
+
+int human_turn(int A[6][7],string player)
+{
+	int choice;
+	bool winning=false;
+	sendstringmessage(player);
+	cin >> choice;
+	choice--;
+	
+	if(A[0][choice] !=0)
+	{		
+		command(3);
+		human_turn(A,player);
+		return 0;
+	}
+	if(choice > 6 || choice < 0)
+	{
+		command(5);
+		human_turn(A,player);
+		return 0;
+	}
+	if(choice == 8)
+	{
+		command(5);
+		human_turn(A,player);
+		return 0;
+	}
+	else 
+	{
+		for(int i = 5; i >= 0;i--)
+		{
+			if(A[i][choice]==0)
+			{
+				A[i][choice]=1;
+				
+				command(4);
+				print_board(A);
+				winning=win_case(A,1,player);
+				if(winning)
+				{
+					cout << player << " has won!" << endl;
+					return 0;
+				}
+				computer_turn(A,player);
+				return 0;
+			}
+		}
+	}
+	return 0;
+}
+
+
+
+
+
 int main()
 {
 	int option; //menu option
@@ -212,7 +384,8 @@ int main()
         {
             case PLAY_CONNECT4:
                 print_board(A);
-				player_mode(mode);
+				mode=player_mode(mode);
+				
                 if (mode == 1)//mode 1- two players
                 {
                   	one = get_name(one);
@@ -233,7 +406,8 @@ int main()
                 }
                 else if(mode == 2)//mode 2- CPU opponent
                 {
-                     //cpu_mode(); 
+                	one = get_name(one);
+                    human_turn(A,one); 
                 }
                 else//check  for the user's input is 1 or 2
                 {

@@ -28,4 +28,11 @@ int make_move(int A[6][7], string player, int check);
 
 bool win_case(int board[6][7], int char_piece, string player); // standard connect 4 board is 6x7
 
+int human_turn(int A[6][7],string player);
+
+bool computer_turn(int A[6][7],string player);
+
+int human_turn(int A[6][7],string player);
+
+
 #endif
