@@ -353,7 +353,7 @@ showLeaderboard(int board[6][4], string player[5])
 	cout << " 3. " << player[2] << board[2][2]  << endl;
 	cout << " 4. " << player[3] << board[3][3]  << endl;
 	cout << " 5. " << player[4] << board[4][4]  << endl;
-	cout << "--------------------------------------" << endl;
+	cout << "-------------------------------------" << endl;
 }
 
 int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, int& games, bool win)
