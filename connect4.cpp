@@ -2,23 +2,23 @@
 #include "Controller.cpp"
 #include "View.cpp"
 #include "time.h"
-#include <iostream>
-#include <fstream>
-
 //welcome fucntion
 void showWelcome() {
-	cout << "\n\tWelcome to Team RAAY's Connect4 Play Station!" << endl;
+	
+	cout << "\nWelcome to Team RAAY's Connect4 Play Station!" << endl << endl;
 }
 
 //Menu Function
 void showMenu()
-{
-	cout << "1. Start Playing" << endl
-		<< "2. Show Leaderboard" << endl
+{	
+   cout << "  1. Start Playing : Single Game " << endl
+		
 		//<< "3. Redefine usernames" << endl
-		<< "3. Match" << endl
-		<< "4. Exit" << endl << endl
-		<< "Please select an option:";
+		<< "  2. Match " << endl
+		<< "  3. Show Leaderboard  " << endl
+		<< "  4. Exit " << endl << endl
+		<< "Please select an option: ";
+		
 }
 
 void print_board(int A[6][7])
@@ -38,7 +38,7 @@ void print_board(int A[6][7])
 int player_mode(int mode)
 {
 	//int mode;
-	cout << "Now before start playing, please select TWO_PLAYERS or CPU mode:";
+	cout << "Now before start playing, please select TWO_PLAYERS or CPU mode: ";
 	cin >> mode;//mode =1 or 2
 	//mode = 1;
 	return mode;
@@ -105,17 +105,6 @@ int make_move(int A[6][7], string player, int check)
 		}
 	}
 	return 0;
-}
-
-void wincounter(int board[6][4], string playerwin, string playername[], ofstream &of)
-{	
-		int i = 0;
-		while (playername[i] != playerwin)
-		{
-			i++;
-		}	
-		board[i][0]++;
-		of << "board :: << " << board[i][0] ; //new
 }
 
 bool win_case(int board[6][7], int char_piece, string player) // standard connect 4 board is 6x7
@@ -343,18 +332,7 @@ int human_turn(int A[6][7],string player)
 	return 0;
 }
 
-showLeaderboard(int board[6][4], string player[5])
-{
-	cout << "-------------------------------------" << endl;
-	cout << "*     Top 5 Player Leaderboard      *" << endl;
-	cout << "-------------------------------------" << endl;
-	cout << " 1. " << player[0] << board[0][0]  << endl;
-	cout << " 2. " << player[1] << board[1][1]  << endl;
-	cout << " 3. " << player[2] << board[2][2]  << endl;
-	cout << " 4. " << player[3] << board[3][3]  << endl;
-	cout << " 5. " << player[4] << board[4][4]  << endl;
-	cout << "-------------------------------------" << endl;
-}
+
 
 int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, int& games, bool win)
 {
@@ -398,16 +376,10 @@ int main()
 {
 	int option; //menu option
 	int A[6][7];
-	int scoreboard[6][4]; //= {0,1,2,3,1,4,5,1};
-	string playerboard[10]; // = { "name ", "name2 ", "name3 ","name4 ", "name5 "};
 	string one,two;
-   	int mode =1;
+    int mode =1;
 	int check=1;
   	bool win = false;
-	
-	ofstream myfile;
-	myfile.open ("scorefile.txt"); //(std::ios::out || std::ios::app);
-	ifstream file("scorefile.txt");
 	
 	for(int i=0;i<6;i++)
 	{	
@@ -419,9 +391,9 @@ int main()
 
 	// constants for menu options
 	const int PLAY_CONNECT4 = 1;
-	const int SHOW_LEADERBOARD = 2;
+	const int MATCH = 2;
+	const int SHOW_LEADERBOARD = 3;
 	//const int REDEFINE_USERNAMES = 3;
-	const int MATCH = 3;
 	const int EXIT = 4;
 	
 	cout << fixed << showpoint << setprecision(1); //sets to 1 decimal place
@@ -485,7 +457,7 @@ int main()
                 break;
                                                    
             case SHOW_LEADERBOARD:
-                 showLeaderboard(scoreboard, playerboard);
+                 //showLeaderboard()
                  break;
                  
             /*case REDEFINE_USERNAMES:
@@ -535,6 +507,7 @@ int main()
       }
     } while (option != EXIT);
 	
-	myfile.close();
+	
 	return 0;
 }
+

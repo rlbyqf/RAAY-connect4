@@ -2,17 +2,17 @@
 
 void printplayerone()
 {
-	cout << "Please enter Player 1's name: " << endl;
+	cout <<endl<< "Please enter Player 1's name: ";
 }
 
 void printplayertwo()
 {
-	cout << "Please enter Player 2's name: " << endl;
+	cout << "Please enter Player 2's name: ";
 }
 
 string printplayermessage(string player)
 {
-	cout << player << ", please choose a column, numbered from left to right, to place a piece:" << endl;
+	cout << endl<< player << ", please choose a column, numbered from left to right, to place a piece: ";
 	return player;
 }
 
