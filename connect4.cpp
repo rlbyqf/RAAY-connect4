@@ -255,6 +255,83 @@ if(!winCase) //vertical
 				}
 	}
 	
+	if(!winCase) // fill horizontal holes with 2s
+	{
+		for(int i=5;i>-1;i--)
+			for(int j=1;j<6;j++)
+				if(A[i][j-1]==1&&A[i][j+1]==1&&A[i][j]==0)
+				{
+					A[i][j]=2;
+					print_board(A);
+					winning=win_case(A,2,"Computer");
+					if(winning)
+					{
+						//cout << " Computer has won!" << endl;
+						return 0;
+					}
+					human_turn(A,player);
+					return 0;
+				}
+	}
+	
+	if(!winCase) //search for 2's and place left horizontally
+	{
+		for(int i=5;i>-1;i--)
+			for(int j=1;j<7;j++)
+				if(A[i][j]==2&&A[i][j-1]==0&&A[i+1][j-1]!=0)
+				{
+					A[i][j-1]=2;
+					print_board(A);
+					cout<<"placing left";
+					winning=win_case(A,2,"Computer");
+					if(winning)
+					{
+						//cout << " Computer has won!" << endl;
+						return 0;
+					}
+					human_turn(A,player);
+					return 0;
+				}
+	}
+	
+	if(!winCase) //search for 2's and place right horizontally
+	{
+		for(int i=5;i>-1;i--)
+			for(int j=0;j<6;j++)
+				if(A[i][j]==2&&A[i][j+1]==0&&A[i-1][j+1]!=0)
+				{
+					A[i][j+1]=2;
+					print_board(A);
+					cout <<"placing right";
+					winning=win_case(A,2,"Computer");
+					if(winning)
+					{
+						//cout << " Computer has won!" << endl;
+						return 0;
+					}
+					human_turn(A,player);
+					return 0;
+				}
+	}
+	
+	if(!winCase) //search for 2's and place vertically
+	{
+		for(int i=5;i>0;i--)
+			for(int j=0;j<7;j++)
+				if(A[i][j]==2&&A[i-1][j]==0)
+				{
+					A[i-1][j]=2;
+					print_board(A);
+					winning=win_case(A,2,"Computer");
+					if(winning)
+					{
+						//cout << " Computer has won!" << endl;
+						return 0;
+					}
+					human_turn(A,player);
+					return 0;
+				}
+	}
 	
 	//cout << "made it";
 	int choice = rand() % 7 + 1;
@@ -460,10 +537,7 @@ int main()
                  //showLeaderboard()
                  break;
                  
-            /*case REDEFINE_USERNAMES:
-                 //redefineUsernames();
-                 break;  
-              */   
+            
             case MATCH:
                  //showMatch();
                  int player1wins = 0;
