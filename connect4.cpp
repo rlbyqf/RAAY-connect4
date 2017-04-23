@@ -198,14 +198,34 @@ if(!winCase) //vertical
 					return 0;
 				}
 	}
-	if(!winCase) //horizontal
+	if(!winCase) //horizontal right
 		for(int i = 0; i < 6; i++)
 		{
 			for(int j = 0; j < 4; j++)
 			{
-				if(A[i][j]==1&&A[i][j+1]==1&&A[i][j+2]==1&&A[i][j+3]==0)
+				if(A[i][j]==1&&A[i][j+1]==1&&A[i][j+2]==1&&A[i][j+3]==0&&A[i+1][j+3]!=0)
 				{
 					A[i][j+3] = 2;
+					print_board(A);
+					winning=win_case(A,2,"Computer");
+					if(winning)
+					{
+						//cout << " Computer has won!" << endl;
+						return 0;
+					}
+					human_turn(A,player);			
+					return 0;
+				}
+			}
+		}
+	if(!winCase) //horizontal left
+		for(int i = 0; i < 6; i++)
+		{
+			for(int j = 3; j < 8; j++)
+			{
+				if(A[i][j]==1&&A[i][j-1]==1&&A[i][j-2]==1&&A[i][j-3]==0&&A[i+1][j-3]!=0)
+				{
+					A[i][j-3] = 2;
 					print_board(A);
 					winning=win_case(A,2,"Computer");
 					if(winning)
