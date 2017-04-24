@@ -2,6 +2,9 @@
 #include "Controller.cpp"
 #include "View.cpp"
 #include "time.h"
+#include <iostream>
+#include <fstream>
+#include <string>
 //welcome fucntion
 void showWelcome() {
 	
@@ -429,7 +432,29 @@ int human_turn(int A[6][7],string player)
 	return 0;
 }
 
+void wincounter(int board[6][4], string playerwin, string playername[] /*,ofstream &of*/)
+{	
+		int i = 0;
+		while (playername[i] != playerwin)
+		{
+			i++;
+		}	
+		board[i][0]++;
+		//of << "board :: << " << board[i][0] ; //new
+}
 
+showLeaderboard(int board[6][4], string player[5])
+{
+	cout << "-------------------------------------" << endl;
+	cout << "*     Top 5 Player Leaderboard      *" << endl;
+	cout << "-------------------------------------" << endl;
+	cout << " 1. " << player[0] << board[0][0]  << endl;
+	cout << " 2. " << player[1] << board[1][1]  << endl;
+	cout << " 3. " << player[2] << board[2][2]  << endl;
+	cout << " 4. " << player[3] << board[3][3]  << endl;
+	cout << " 5. " << player[4] << board[4][4]  << endl;
+	cout << "--------------------------------------" << endl;
+}
 
 int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, int& games, bool win)
 {
@@ -473,10 +498,27 @@ int main()
 {
 	int option; //menu option
 	int A[6][7];
+	int scoreboard[6][4]; //= {0,1,2,3,1,4,5,1};
+	string playerboard[10]; // = { "name ", "name2 ", "name3 ","name4 ", "name5 "};
 	string one,two;
+	int k = 0;
+	int B[50];
+	string arr[20];
     int mode =1;
 	int check=1;
   	bool win = false;
+	
+	ifstream File;
+	File.open("scorefile.txt");
+	while(!File.eof())
+	{
+		File >> playerboard[k];
+		File >> B[k];
+		k++;
+		File >> B[k];
+		k++;
+	}
+	File.close();
 	
 	for(int i=0;i<6;i++)
 	{	
@@ -554,7 +596,7 @@ int main()
                 break;
                                                    
             case SHOW_LEADERBOARD:
-                 //showLeaderboard()
+                 //showLeaderboard(int board[6][4], string player[5]);
                  break;
                  
             
@@ -604,4 +646,3 @@ int main()
 	
 	return 0;
 }
-
