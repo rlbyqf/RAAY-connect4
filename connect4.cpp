@@ -7,21 +7,21 @@
 #include <string>
 //welcome fucntion
 void showWelcome() {
-	
+
 	cout << "\nWelcome to Team RAAY's Connect4 Play Station!" << endl << endl;
 }
 
 //Menu Function
 void showMenu()
-{	
+{
    cout << "  1. Start Playing : Single Game " << endl
-		
+
 		//<< "3. Redefine usernames" << endl
 		<< "  2. Match " << endl
 		<< "  3. Show Leaderboard  " << endl
 		<< "  4. Exit " << endl << endl
 		<< "Please select an option: ";
-		
+
 }
 
 void print_board(int A[6][7])
@@ -145,7 +145,7 @@ bool win_case(int board[6][7], int char_piece, string player) // standard connec
 		}
 
 	if (!winCase)
-		// diagonal win 
+		// diagonal win
 		for (int col = 0; col <= 3; col++)
 		{
 			for (int row = 0; row <= 2; row++)
@@ -216,7 +216,7 @@ if(!winCase) //vertical
 						//cout << " Computer has won!" << endl;
 						return 0;
 					}
-					human_turn(A,player);			
+					human_turn(A,player);
 					return 0;
 				}
 			}
@@ -236,7 +236,7 @@ if(!winCase) //vertical
 						//cout << " Computer has won!" << endl;
 						return 0;
 					}
-					human_turn(A,player);			
+					human_turn(A,player);
 					return 0;
 				}
 			}
@@ -277,7 +277,7 @@ if(!winCase) //vertical
 					return 0;
 				}
 	}
-	
+
 	if(!winCase) // fill horizontal holes with 2s
 	{
 		for(int i=5;i>-1;i--)
@@ -296,7 +296,7 @@ if(!winCase) //vertical
 					return 0;
 				}
 	}
-	
+
 	if(!winCase) //search for 2's and place left horizontally
 	{
 		for(int i=5;i>-1;i--)
@@ -316,7 +316,7 @@ if(!winCase) //vertical
 					return 0;
 				}
 	}
-	
+
 	if(!winCase) //search for 2's and place right horizontally
 	{
 		for(int i=5;i>-1;i--)
@@ -336,7 +336,7 @@ if(!winCase) //vertical
 					return 0;
 				}
 	}
-	
+
 	if(!winCase) //search for 2's and place vertically
 	{
 		for(int i=5;i>0;i--)
@@ -355,7 +355,7 @@ if(!winCase) //vertical
 					return 0;
 				}
 	}
-	
+
 	//cout << "made it";
 	int choice = rand() % 7 + 1;
 	choice--;
@@ -376,7 +376,7 @@ if(!winCase) //vertical
 			return 0;
 		}
 	}
-	
+
 
 	return 0;
 }
@@ -389,9 +389,9 @@ int human_turn(int A[6][7],string player)
 	sendstringmessage(player);
 	cin >> choice;
 	choice--;
-	
+
 	if(A[0][choice] !=0)
-	{		
+	{
 		command(3);
 		human_turn(A,player);
 		return 0;
@@ -408,14 +408,14 @@ int human_turn(int A[6][7],string player)
 		human_turn(A,player);
 		return 0;
 	}
-	else 
+	else
 	{
 		for(int i = 5; i >= 0;i--)
 		{
 			if(A[i][choice]==0)
 			{
 				A[i][choice]=1;
-				
+
 				command(4);
 				print_board(A);
 				winning=win_case(A,1,player);
@@ -433,17 +433,17 @@ int human_turn(int A[6][7],string player)
 }
 
 void wincounter(int board[6][4], string playerwin, string playername[] /*,ofstream &of*/)
-{	
+{
 		int i = 0;
 		while (playername[i] != playerwin)
 		{
 			i++;
-		}	
+		}
 		board[i][0]++;
 		//of << "board :: << " << board[i][0] ; //new
 }
 
-showLeaderboard(int board[6][4], string player[5])
+void showLeaderboard(int board[6][4], string player[5])
 {
 	cout << "-------------------------------------" << endl;
 	cout << "*     Top 5 Player Leaderboard      *" << endl;
@@ -458,8 +458,8 @@ showLeaderboard(int board[6][4], string player[5])
 
 int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, int& games, bool win)
 {
-	int winner; 
-	while(!win)
+	int winner;
+	while(!win && fullboard(A))
 	{
 		if(!win)
 		{
@@ -480,12 +480,30 @@ int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, in
 				twoWins++;
 				winner = 2;
 			}
-		}	
+		}
 	}
+    if(!(fullboard(A)))
+    {
+        winner = 3;
+        cout << "Draw" << endl;
+    }
 	games++;
 	return winner;
 }
 
+bool fullboard(int A[6][7])
+{
+    bool full = false;
+    for(int i = 0; i < 6; i++)
+    {
+        for(int j = 0; j < 7; j++)
+        {
+            if(A[i][j] == 0)
+                full = true;
+        }
+    }
+    return full;
+}
 
 /*---------------------------------------------------------------
 
@@ -507,7 +525,7 @@ int main()
     int mode =1;
 	int check=1;
   	bool win = false;
-	
+
 	ifstream File;
 	File.open("scorefile.txt");
 	while(!File.eof())
@@ -519,12 +537,12 @@ int main()
 		k++;
 	}
 	File.close();
-	
+
 	for(int i=0;i<6;i++)
-	{	
+	{
 		for (int j=0;j<7;j++)
 		{
-			A[i][j]=0;		
+			A[i][j]=0;
 		}
 	}
 
@@ -534,21 +552,21 @@ int main()
 	const int SHOW_LEADERBOARD = 3;
 	//const int REDEFINE_USERNAMES = 3;
 	const int EXIT = 4;
-	
+
 	cout << fixed << showpoint << setprecision(1); //sets to 1 decimal place
-	
+
 	do{
        showWelcome(); //show the welcome message first
        showMenu();
        cin >> option;
-      
+
       //Validate menu option
       while (option < PLAY_CONNECT4 || option > EXIT)
       {
         cout << "Please enter a valid menu option: ";
         cin >> option;
       }
-	  
+
       //If user does not want to quit, proceed.
       if (option != EXIT)
       {
@@ -556,84 +574,85 @@ int main()
         {
             case PLAY_CONNECT4:
             	for(int i=0;i<6;i++)
-				{		
+				{
 					for (int j=0;j<7;j++)
 					{
-						A[i][j]=0;		
+						A[i][j]=0;
 					}
 				}
                 print_board(A);
 				mode=player_mode(mode);
-				
+
                 if (mode == 1)//mode 1- two players
                 {
-                	win = false;
-                  	one = get_name(one);
-	                two = get_name2(two);
-                    while(!win)
-	                {
-    	              if(!win)
-    	              {
-		               make_move(A,one,1);
-	  	               win = win_case(A,1,one);
-    	              }
-    	              if(!win)
-    	              {		
-    	               make_move(A,two,2);
-		               win = win_case(A,2,two);
-    	              }
-	                }
+                    win = false;
+                    one = get_name(one);
+                    two = get_name2(two);
+                    while (!win && fullboard(A)) {
+                        if (!win) {
+                            make_move(A, one, 1);
+                            win = win_case(A, 1, one);
+                        }
+                        if (!win) {
+                            make_move(A, two, 2);
+                            win = win_case(A, 2, two);
+                        }
+                    }
+                    if (!(fullboard(A)))
+                    {
+                        cout << "Draw" << endl;
+                    }
                 }
                 else if(mode == 2)//mode 2- CPU opponent
                 {
                 	one = get_name(one);
-                    human_turn(A,one); 
+                    human_turn(A,one);
                 }
                 else//check  for the user's input is 1 or 2
                 {
                     cout<<"Invalid mode selection! Please enter 1 or 2.";
                 }
                 break;
-                                                   
+
             case SHOW_LEADERBOARD:
                  //showLeaderboard(int board[6][4], string player[5]);
                  break;
-                 
-            
+
+
             case MATCH:
                  //showMatch();
                  int player1wins = 0;
 				 int player2wins = 0;
 				 int gameNum = 0;
-				 
+
 				 for(int i=0;i<6;i++)
-					{	
+					{
 					for (int j=0;j<7;j++)
 						{
-							A[i][j]=0;		
+							A[i][j]=0;
 						}
 					}
 				 print_board(A);
 				 one = get_name(one);
 	             two = get_name2(two);
-	             
+
 				 while((player1wins != 2 && player2wins !=2) && gameNum != 3)
 				 {
 				 	 win = false;
 				 	 for(int i=0;i<6;i++)
-					{	
+					{
 					for (int j=0;j<7;j++)
 						{
-							A[i][j]=0;		
+							A[i][j]=0;
 						}
 					}
 				 	 showMatch(A,one,two,player1wins,player2wins,gameNum,win);
 				 }
 				 if(player1wins == 2 || player2wins ==2 || gameNum == 3)
 				 {
-				 	if(player1wins == 2)
+				 	if(player1wins == 2 || (player1wins > player2wins))
 				 		cout << one << " wins the match!" << endl;
-				 	else if(player2wins == 2)
+				 	else if(player2wins == 2 || (player2wins > player1wins))
 				 		cout << two << " wins the match!" << endl;
 				 	else
 				 		cout << "Draw" << endl;
@@ -642,7 +661,7 @@ int main()
         }
       }
     } while (option != EXIT);
-	
-	
+
+
 	return 0;
 }
