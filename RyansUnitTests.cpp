@@ -82,8 +82,8 @@ void AIDiagnalLeftTest1()
 int main()
 {
 	AIHorizontalTest1();
-	AIVerticalTest1();
-	AIDiagnalRightTest1();
-	AIDiagnalLeftTest1();
+	//AIVerticalTest1();
+	//AIDiagnalRightTest1();
+	//AIDiagnalLeftTest1();
 	return 0;
 }

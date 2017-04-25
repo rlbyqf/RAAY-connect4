@@ -547,7 +547,7 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 		{
 			for(int j = 0; j < 4; j++)
 			{
-				if(A[i][j]==1&&A[i][j+1]==1&&A[i][j+2]==1&&A[i][j+3]==0&&A[i+1][j+3]!=0)
+				if(A[i][j]==1&&A[i][j+1]==1&&A[i][j+2]==1&&A[i][j+3]==0)
 				{
 					A[i][j+3] = 2;				
 					print_board(A);
@@ -586,9 +586,9 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 	{
 		for(int i=5;i>2;i--)
 			for(int j=0;j<4;j++)
-				if(A[i][j]==1&&A[i+1][j+1]==1&&A[i+2][j+2]==1&&A[i+3][j+3]==0)
+				if(A[i][j]==1&&A[i-1][j+1]==1&&A[i-2][j+2]==1&&A[i-3][j+3]==0&&A[i-2][j+3]!=0)
 				{
-					A[i+3][j+3]=2;	
+					A[i-3][j+3]=2;	
 					print_board(A);
 					winning=win_case(A,2,"Computer");
 					if(winning)
@@ -604,9 +604,9 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 	{
 		for(int i=5;i>2;i--)
 			for(int j=3;j<7;j++)
-				if(A[i][j]==1&&A[i+1][j-1]==1&&A[i+2][j-2]==1&&A[i+3][j-3]==0)
+				if(A[i][j]==1&&A[i-1][j-1]==1&&A[i-2][j-2]==1&&A[i-3][j-3]==0&&A[i-2][j-3]!=0)
 				{
-					A[i+3][j-3]=2;
+					A[i-3][j-3]=2;
 					print_board(A);
 					winning=win_case(A,2,"Computer");
 					if(winning)
@@ -859,7 +859,7 @@ int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, in
 
 ---------------------------------------------------------------*/
 
-
+/*
 int main()
 {
 	int option; //menu option
@@ -1076,4 +1076,4 @@ int main()
 
 	return 0;
 }
-
+*/
