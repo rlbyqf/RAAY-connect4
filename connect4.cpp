@@ -81,6 +81,72 @@ void print_board(int A[6][7])
 	cout << endl << endl;
 }
 
+void print_board2(int A[6][9])
+{
+	cout << endl << "Here is the initial board showing below:" << endl;
+	for (int i = 0;i<6;i++)
+	{
+		cout << endl;
+		for (int j = 0;j<9;j++)
+		{
+			if(A[i][j] == 1)
+			{
+				WORD Attributes = 0;
+				SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_RED);
+				cout << A[i][j] << " ";
+				//cout << endl<< player;
+				ResetConsoleColour(Attributes);
+			}
+			if(A[i][j] == 2)
+			{
+				WORD Attributes = 0;
+				SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+				cout << A[i][j] << " ";
+				//cout << endl<< player;
+				ResetConsoleColour(Attributes);
+			}
+			if(A[i][j] == 0)
+			{
+				cout << A[i][j] << " ";
+			}
+		}
+	}
+	cout << endl << endl;
+}
+
+void print_board3(int A[19][19])
+{
+	cout << endl << "Here is the initial board showing below:" << endl;
+	for (int i = 0;i<19;i++)
+	{
+		cout << endl;
+		for (int j = 0;j<19;j++)
+		{
+			if(A[i][j] == 1)
+			{
+				WORD Attributes = 0;
+				SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_RED);
+				cout << A[i][j] << " ";
+				//cout << endl<< player;
+				ResetConsoleColour(Attributes);
+			}
+			if(A[i][j] == 2)
+			{
+				WORD Attributes = 0;
+				SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+				cout << A[i][j] << " ";
+				//cout << endl<< player;
+				ResetConsoleColour(Attributes);
+			}
+			if(A[i][j] == 0)
+			{
+				cout << A[i][j] << " ";
+			}
+		}
+	}
+	cout << endl << endl;
+}
+
 int player_mode(int mode)
 {
 	//int mode;
@@ -167,6 +233,89 @@ int make_move(int A[6][7], string player, int check)
 	return 0;
 }
 
+int make_move2(int A[6][9], string player, int check)
+{
+	int choice;
+	sendstringmessage2(player, A, check);
+	cin >> choice;
+	choice--;
+
+	if (A[0][choice] != 0)
+	{
+		command(3);
+		make_move2(A, player, check);
+		return 0;
+	}
+	if (choice > 8 || choice < 0)
+	{
+		command(5);
+		make_move2(A, player, check);
+		return 0;
+	}
+	else
+	{
+		for (int i = 5; i >= 0;i--)
+		{
+			if (A[i][choice] == 0)
+			{
+				A[i][choice] = check;
+				if (check == 1)
+					check++;
+				if (check == 2)
+					check--;
+
+				command(4);
+				print_board2(A);
+
+				return check;
+			}
+		}
+	}
+	return 0;
+}
+
+int make_move3(int A[19][19], string player, int check)
+{
+	int choice;
+	sendstringmessage3(player, A, check);
+	cin >> choice;
+	choice--;
+
+	if (A[0][choice] != 0)
+	{
+		command(3);
+		make_move3(A, player, check);
+		return 0;
+	}
+	if (choice > 18 || choice < 0)
+	{
+		command(5);
+		make_move3(A, player, check);
+		return 0;
+	}
+	else
+	{
+		for (int i = 18; i >= 0;i--)
+		{
+			if (A[i][choice] == 0)
+			{
+				A[i][choice] = check;
+				if (check == 1)
+					check++;
+				if (check == 2)
+					check--;
+
+				command(4);
+				print_board3(A);
+
+				return check;
+			}
+		}
+	}
+	return 0;
+}
+
+
 bool win_case(int board[6][7], int char_piece, string player) // standard connect 4 board is 6x7
 {
 	bool winCase = false;
@@ -180,8 +329,7 @@ bool win_case(int board[6][7], int char_piece, string player) // standard connec
 			{
 				if (board[row][col] == char_piece && board[row][col + 1] == char_piece && board[row][col + 2] == char_piece && board[row][col + 3] == char_piece)
 				{
-
-					sendwinner(board, char_piece, player);
+					sendwinner(char_piece, player);
 					winCase = true;
 				}
 			}
@@ -196,7 +344,7 @@ bool win_case(int board[6][7], int char_piece, string player) // standard connec
 				if (board[row][col] == char_piece && board[row + 1][col] == char_piece && board[row + 2][col] == char_piece && board[row + 3][col] == char_piece)
 				{
 					//sendwinner(player);
-					sendwinner(board, char_piece, player);
+					sendwinner(char_piece, player);
 					winCase = true;
 				}
 			}
@@ -211,7 +359,7 @@ bool win_case(int board[6][7], int char_piece, string player) // standard connec
 				if (board[row][col] == char_piece && board[row + 1][col + 1] == char_piece && board[row + 2][col + 2] == char_piece && board[row + 3][col + 3] == char_piece)
 				{
 					//sendwinner(player);
-					sendwinner(board, char_piece, player);
+					sendwinner(char_piece, player);
 					winCase = true;
 				}
 			}
@@ -226,7 +374,135 @@ bool win_case(int board[6][7], int char_piece, string player) // standard connec
 				if (board[row][col] == char_piece && board[row + 1][col - 1] == char_piece && board[row + 2][col - 2] == char_piece && board[row + 3][col - 3] == char_piece)
 				{
 					//sendwinner(player);
-					sendwinner(board, char_piece, player);
+					sendwinner(char_piece, player);
+					winCase = true;
+				}
+			}
+		}
+
+	// return true if there is a winning case
+	return winCase;
+}
+
+bool win_case2(int board[6][9], int char_piece, string player)
+{
+	bool winCase = false;
+
+	// horizontal win
+	if (!winCase)
+		for (int row = 0; row <= 5; row++)
+		{
+			for (int col = 0; col <= 4; col++)
+			{
+				if (board[row][col] == char_piece && board[row][col + 1] == char_piece && board[row][col + 2] == char_piece && board[row][col + 3] == char_piece && board[row][col + 4] == char_piece)
+				{
+					sendwinner(char_piece, player);
+					winCase = true;
+				}
+			}
+		}
+
+	if (!winCase)
+		// vertical win
+		for (int col = 0; col <= 8; col++)
+		{
+			for (int row = 0; row <= 1; row++)
+			{
+				if (board[row][col] == char_piece && board[row + 1][col] == char_piece && board[row + 2][col] == char_piece && board[row + 3][col] == char_piece && board[row + 4][col] == char_piece)
+				{
+					sendwinner(char_piece, player);
+					winCase = true;
+				}
+			}
+		}
+
+	if (!winCase)
+		// diagonal win
+		for (int col = 0; col <= 4; col++)
+		{
+			for (int row = 0; row <= 1; row++)
+			{
+				if (board[row][col] == char_piece && board[row + 1][col + 1] == char_piece && board[row + 2][col + 2] == char_piece && board[row + 3][col + 3] == char_piece && board[row + 4][col + 4] == char_piece)
+				{
+					sendwinner(char_piece, player);
+					winCase = true;
+				}
+			}
+		}
+
+	if (!winCase)
+		// diagonal win
+		for (int col = 8; col >= 4; col--)
+		{
+			for (int row = 0; row <= 1; row++)
+			{
+				if (board[row][col] == char_piece && board[row + 1][col - 1] == char_piece && board[row + 2][col - 2] == char_piece && board[row + 3][col - 3] == char_piece && board[row + 4][col - 4] == char_piece)
+				{
+					sendwinner(char_piece, player);
+					winCase = true;
+				}
+			}
+		}
+
+	// return true if there is a winning case
+	return winCase;
+}
+
+bool win_case3(int board[19][19], int char_piece, string player)
+{
+	bool winCase = false;
+
+	// horizontal win
+	if (!winCase)
+		for (int row = 0; row <= 18; row++)
+		{
+			for (int col = 0; col <= 13; col++)
+			{
+				if (board[row][col] == char_piece && board[row][col + 1] == char_piece && board[row][col + 2] == char_piece && board[row][col + 3] == char_piece && board[row][col + 4] == char_piece && board[row][col + 5] == char_piece)
+				{
+					sendwinner(char_piece, player);
+					winCase = true;
+				}
+			}
+		}
+
+	if (!winCase)
+		// vertical win
+		for (int col = 0; col <= 18; col++)
+		{
+			for (int row = 0; row <= 13; row++)
+			{
+				if (board[row][col] == char_piece && board[row + 1][col] == char_piece && board[row + 2][col] == char_piece && board[row + 3][col] == char_piece && board[row + 4][col] == char_piece && board[row + 5][col] == char_piece)
+				{
+					sendwinner(char_piece, player);
+					winCase = true;
+				}
+			}
+		}
+
+	if (!winCase)
+		// diagonal win
+		for (int col = 0; col <= 13; col++)
+		{
+			for (int row = 0; row <= 13; row++)
+			{
+				if (board[row][col] == char_piece && board[row + 1][col + 1] == char_piece && board[row + 2][col + 2] == char_piece && board[row + 3][col + 3] == char_piece && board[row + 4][col + 4] == char_piece && board[row + 5][col + 5] == char_piece)
+				{
+					sendwinner(char_piece, player);
+					winCase = true;
+				}
+			}
+		}
+
+	if (!winCase)
+		// diagonal win
+		for (int col = 18; col >= 5; col--)
+		{
+			for (int row = 0; row <= 13; row++)
+			{
+				if (board[row][col] == char_piece && board[row + 1][col - 1] == char_piece && board[row + 2][col - 2] == char_piece && board[row + 3][col - 3] == char_piece && board[row + 4][col - 4] == char_piece && board[row + 5][col - 5] == char_piece)
+				{
+					sendwinner(char_piece, player);
 					winCase = true;
 				}
 			}
@@ -310,9 +586,9 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 	{
 		for(int i=5;i>2;i--)
 			for(int j=0;j<4;j++)
-				if(A[i][j]==1&&A[i-1][j+1]==1&&A[i-2][j+2]==1&&A[i-3][j+3]==0&&A[i-2][j+3]!=0)
+				if(A[i][j]==1&&A[i+1][j+1]==1&&A[i+2][j+2]==1&&A[i+3][j+3]==0)
 				{
-					A[i-3][j+3]=2;	
+					A[i+3][j+3]=2;	
 					print_board(A);
 					winning=win_case(A,2,"Computer");
 					if(winning)
@@ -328,9 +604,9 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 	{
 		for(int i=5;i>2;i--)
 			for(int j=3;j<7;j++)
-				if(A[i][j]==1&&A[i-1][j-1]==1&&A[i-2][j-2]==1&&A[i-3][j-3]==0&&A[i-2][j-3]!=0)
+				if(A[i][j]==1&&A[i+1][j-1]==1&&A[i+2][j-2]==1&&A[i+3][j-3]==0)
 				{
-					A[i-3][j-3]=2;
+					A[i+3][j-3]=2;
 					print_board(A);
 					winning=win_case(A,2,"Computer");
 					if(winning)
@@ -511,6 +787,35 @@ bool fullboard(int A[6][7])
     }
     return full;
 }
+
+bool fullboard2(int A[6][9])
+{
+	bool full = false;
+	for(int i = 0; i < 6; i++)
+	{
+		for(int j = 0; j < 9; j++)
+		{
+			if(A[i][j] == 0)
+				full = true;
+		}
+	}
+	return full;
+}
+
+bool fullboard3(int A[19][19])
+{
+	bool full = false;
+	for(int i = 0; i < 19; i++)
+	{
+		for(int j = 0; j < 19; j++)
+		{
+			if(A[i][j] == 0)
+				full = true;
+		}
+	}
+	return full;
+}
+
 int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, int& games, bool win)
 {
 	int winner;
@@ -554,16 +859,21 @@ int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, in
 
 ---------------------------------------------------------------*/
 
-/*
+
 int main()
 {
 	int option; //menu option
 	int A[6][7];
+	int connect5[6][9];
+	int connect6[19][19];
 	string one,two;
 	//string red, yellow;
     int mode =1;
 	int check=1;
   	bool win = false;
+  	int player1wins = 0;
+	int player2wins = 0;
+	int gameNum = 0;
   	//WORD Attributes = 0;
 
 	//clear the board
@@ -658,9 +968,7 @@ int main()
             
             case MATCH:
                  //showMatch();
-                 int player1wins = 0;
-				 int player2wins = 0;
-				 int gameNum = 0;
+
 				 
 				 for(int i=0;i<6;i++)
 				 {	
@@ -689,18 +997,76 @@ int main()
 				 {
 				 	if(player1wins == 2 || (player1wins > player2wins))
 				 		cout << one << " wins the match!" << endl;
-				 	else if(player2wins == 2 || (player2wins > player1wins)
+				 	else if(player2wins == 2 || (player2wins > player1wins))
 				 		cout << two << " wins the match!" << endl;
 				 	else
 				 		cout << "Draw" << endl;
 				 }
                  break;
+                 
             case CONNECT_5:
             	//CONNECT 5
-            	break;
+				for(int i=0;i<6;i++)
+				{
+					for (int j=0;j<9;j++)
+					{
+						connect5[i][j]=0;
+					}
+				}
+				print_board2(connect5);
+				win = false;
+				one = get_name(one);
+				two = get_name2(two);
+				while (!win && fullboard2(connect5))
+				{
+					if (!win)
+					{
+						make_move2(connect5, one, 1);
+						win = win_case2(connect5, 1, one);
+					}
+					if (!win)
+					{
+						make_move2(connect5, two, 2);
+						win = win_case2(connect5, 2, two);
+					}
+				}
+				if (!(fullboard2(connect5)))
+				{
+					cout << "Draw" << endl;
+				}
+          	 	break;
+
             case CONNECT_6:
             	//CONNECT 6
-            	break;
+				for(int i=0;i<19;i++)
+				{
+					for (int j=0;j<19;j++)
+					{
+						connect6[i][j]=0;
+					}
+				}
+				print_board3(connect6);
+				win = false;
+				one = get_name(one);
+				two = get_name2(two);
+				while (!win && fullboard3(connect6))
+				{
+					if (!win)
+					{
+						make_move3(connect6, one, 1);
+						win = win_case3(connect6, 1, one);
+					}
+					if (!win)
+					{
+						make_move3(connect6, two, 2);
+						win = win_case3(connect6, 2, two);
+					}
+				}
+				if (!(fullboard3(connect6)))
+				{
+					cout << "Draw" << endl;
+				}
+				break;
             
       }
   }
@@ -708,4 +1074,4 @@ int main()
 
 	return 0;
 }
-*/
+
