@@ -2,37 +2,80 @@
 #include "Controller.cpp"
 #include "View.cpp"
 #include "time.h"
-#include <iostream>
-#include <fstream>
-#include <string>
-//welcome fucntion
-void showWelcome() {
 
-	cout << "\nWelcome to Team RAAY's Connect4 Play Station!" << endl << endl;
+
+//welcome fucntion
+void showWelcome() 
+{
+	WORD Attributes = 0;
+    //SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
+    SetConsoleColour(&Attributes, BACKGROUND_INTENSITY | BACKGROUND_RED);
+    cout << "\nWelcome to Team RAAY's Connect4 Play Station!" << endl << endl;
+    ResetConsoleColour(Attributes);
+	
 }
 
 //Menu Function
 void showMenu()
-{
-   cout << "  1. Start Playing : Single Game " << endl
-
-		//<< "3. Redefine usernames" << endl
-		<< "  2. Match " << endl
-		<< "  3. Show Leaderboard  " << endl
-		<< "  4. Exit " << endl << endl
-		<< "Please select an option: ";
-
+{	
+	WORD Attributes = 0;
+    SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
+    cout << "  1. Start Playing : Single Game " << endl;
+    ResetConsoleColour(Attributes);	
+    
+    SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	cout << "  2. Match " << endl;
+	ResetConsoleColour(Attributes);	
+	
+	SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_RED );
+	cout << "  3. Show Leaderboard  " << endl;
+	ResetConsoleColour(Attributes);	
+	
+	SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_BLUE);
+	cout << "  4. Connect 5  " << endl;
+	ResetConsoleColour(Attributes);	
+	
+	SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_RED);
+	cout << "  5. Connect 6  " << endl;
+	ResetConsoleColour(Attributes);	
+	
+	SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
+	cout << "  6. Exit " << endl << endl;
+	ResetConsoleColour(Attributes);	
+	
+	cout<< "Please select an option: ";
+	 
+		
 }
 
 void print_board(int A[6][7])
 {
-	cout << endl << "Here is the initial board showing below:" << endl;
+	cout << endl << "Here is the board showing below:" << endl;
 	for (int i = 0;i<6;i++)
 	{
 		cout << endl;
 		for (int j = 0;j<7;j++)
 		{
-			cout << A[i][j] << " ";
+			if(A[i][j] == 1)
+			{
+				WORD Attributes = 0;
+	            SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_RED);
+				cout << A[i][j] << " ";	
+	            //cout << endl<< player;
+	            ResetConsoleColour(Attributes);	
+			}
+			if(A[i][j] == 2)
+			{
+				WORD Attributes = 0;
+	            SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+				cout << A[i][j] << " ";	
+	            //cout << endl<< player;
+	            ResetConsoleColour(Attributes);	
+			}
+			if(A[i][j] == 0)
+			{
+				cout << A[i][j] << " ";	
+			}
 		}
 	}
 	cout << endl << endl;
@@ -63,10 +106,24 @@ string get_name2(string two)
 	return two;
 }
 
+//function to let the user play the game using different colors
+/*string yellow_or_red(string color, string& one)
+{
+   cout<< one<<" , would you want to play with Red piece or Yellow piece? :";
+   cin >> color;
+   return color;
+}
+
+string yellow_or_red2(string color, string& two)
+{
+   cout<< two <<" you are assigned to ";
+   return color;
+}*/
+
 int make_move(int A[6][7], string player, int check)
 {
 	int choice;
-	sendstringmessage(player);
+	sendstringmessage(player,A,check);
 	cin >> choice;
 	choice--;
 
@@ -124,7 +181,7 @@ bool win_case(int board[6][7], int char_piece, string player) // standard connec
 				if (board[row][col] == char_piece && board[row][col + 1] == char_piece && board[row][col + 2] == char_piece && board[row][col + 3] == char_piece)
 				{
 
-					sendwinner(player);
+					sendwinner(board, char_piece, player);
 					winCase = true;
 				}
 			}
@@ -138,21 +195,23 @@ bool win_case(int board[6][7], int char_piece, string player) // standard connec
 			{
 				if (board[row][col] == char_piece && board[row + 1][col] == char_piece && board[row + 2][col] == char_piece && board[row + 3][col] == char_piece)
 				{
-					sendwinner(player);
+					//sendwinner(player);
+					sendwinner(board, char_piece, player);
 					winCase = true;
 				}
 			}
 		}
 
 	if (!winCase)
-		// diagonal win
+		// diagonal win 
 		for (int col = 0; col <= 3; col++)
 		{
 			for (int row = 0; row <= 2; row++)
 			{
 				if (board[row][col] == char_piece && board[row + 1][col + 1] == char_piece && board[row + 2][col + 2] == char_piece && board[row + 3][col + 3] == char_piece)
 				{
-					sendwinner(player);
+					//sendwinner(player);
+					sendwinner(board, char_piece, player);
 					winCase = true;
 				}
 			}
@@ -166,7 +225,8 @@ bool win_case(int board[6][7], int char_piece, string player) // standard connec
 			{
 				if (board[row][col] == char_piece && board[row + 1][col - 1] == char_piece && board[row + 2][col - 2] == char_piece && board[row + 3][col - 3] == char_piece)
 				{
-					sendwinner(player);
+					//sendwinner(player);
+					sendwinner(board, char_piece, player);
 					winCase = true;
 				}
 			}
@@ -182,8 +242,13 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 	srand(time(NULL));
 	bool winning=false;
 	bool winCase = false;
+	
+	WORD Attributes = 0;
+	SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_GREEN);	
 	cout << "computer's turn: " << endl;
-if(!winCase) //vertical
+	ResetConsoleColour(Attributes);
+	
+    if(!winCase) //vertical
 	{
 		for(int i=5;i>2;i--)
 			for(int j=0;j<7;j++)
@@ -208,7 +273,7 @@ if(!winCase) //vertical
 			{
 				if(A[i][j]==1&&A[i][j+1]==1&&A[i][j+2]==1&&A[i][j+3]==0&&A[i+1][j+3]!=0)
 				{
-					A[i][j+3] = 2;
+					A[i][j+3] = 2;				
 					print_board(A);
 					winning=win_case(A,2,"Computer");
 					if(winning)
@@ -216,7 +281,7 @@ if(!winCase) //vertical
 						//cout << " Computer has won!" << endl;
 						return 0;
 					}
-					human_turn(A,player);
+					human_turn(A,player);			
 					return 0;
 				}
 			}
@@ -236,7 +301,7 @@ if(!winCase) //vertical
 						//cout << " Computer has won!" << endl;
 						return 0;
 					}
-					human_turn(A,player);
+					human_turn(A,player);			
 					return 0;
 				}
 			}
@@ -247,7 +312,7 @@ if(!winCase) //vertical
 			for(int j=0;j<4;j++)
 				if(A[i][j]==1&&A[i+1][j+1]==1&&A[i+2][j+2]==1&&A[i+3][j+3]==0)
 				{
-					A[i+3][j+3]=2;
+					A[i+3][j+3]=2;	
 					print_board(A);
 					winning=win_case(A,2,"Computer");
 					if(winning)
@@ -277,7 +342,7 @@ if(!winCase) //vertical
 					return 0;
 				}
 	}
-
+	
 	if(!winCase) // fill horizontal holes with 2s
 	{
 		for(int i=5;i>-1;i--)
@@ -296,7 +361,7 @@ if(!winCase) //vertical
 					return 0;
 				}
 	}
-
+	
 	if(!winCase) //search for 2's and place left horizontally
 	{
 		for(int i=5;i>-1;i--)
@@ -316,7 +381,7 @@ if(!winCase) //vertical
 					return 0;
 				}
 	}
-
+	
 	if(!winCase) //search for 2's and place right horizontally
 	{
 		for(int i=5;i>-1;i--)
@@ -336,7 +401,7 @@ if(!winCase) //vertical
 					return 0;
 				}
 	}
-
+	
 	if(!winCase) //search for 2's and place vertically
 	{
 		for(int i=5;i>0;i--)
@@ -355,7 +420,7 @@ if(!winCase) //vertical
 					return 0;
 				}
 	}
-
+	
 	//cout << "made it";
 	int choice = rand() % 7 + 1;
 	choice--;
@@ -376,7 +441,7 @@ if(!winCase) //vertical
 			return 0;
 		}
 	}
-
+	
 
 	return 0;
 }
@@ -385,13 +450,14 @@ if(!winCase) //vertical
 int human_turn(int A[6][7],string player)
 {
 	int choice;
+	int check=1;
 	bool winning=false;
-	sendstringmessage(player);
+	sendstringmessage(player,A,check);
 	cin >> choice;
 	choice--;
-
+	
 	if(A[0][choice] !=0)
-	{
+	{		
 		command(3);
 		human_turn(A,player);
 		return 0;
@@ -408,14 +474,14 @@ int human_turn(int A[6][7],string player)
 		human_turn(A,player);
 		return 0;
 	}
-	else
+	else 
 	{
 		for(int i = 5; i >= 0;i--)
 		{
 			if(A[i][choice]==0)
 			{
 				A[i][choice]=1;
-
+				
 				command(4);
 				print_board(A);
 				winning=win_case(A,1,player);
@@ -432,30 +498,19 @@ int human_turn(int A[6][7],string player)
 	return 0;
 }
 
-void wincounter(int board[6][4], string playerwin, string playername[] /*,ofstream &of*/)
+bool fullboard(int A[6][7])
 {
-		int i = 0;
-		while (playername[i] != playerwin)
-		{
-			i++;
-		}
-		board[i][0]++;
-		//of << "board :: << " << board[i][0] ; //new
+    bool full = false;
+    for(int i = 0; i < 6; i++)
+    {
+        for(int j = 0; j < 7; j++)
+        {
+            if(A[i][j] == 0)
+                full = true;
+        }
+    }
+    return full;
 }
-
-void showLeaderboard(int board[6][4], string player[5])
-{
-	cout << "-------------------------------------" << endl;
-	cout << "*     Top 5 Player Leaderboard      *" << endl;
-	cout << "-------------------------------------" << endl;
-	cout << " 1. " << player[0] << board[0][0]  << endl;
-	cout << " 2. " << player[1] << board[1][1]  << endl;
-	cout << " 3. " << player[2] << board[2][2]  << endl;
-	cout << " 4. " << player[3] << board[3][3]  << endl;
-	cout << " 5. " << player[4] << board[4][4]  << endl;
-	cout << "--------------------------------------" << endl;
-}
-
 int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, int& games, bool win)
 {
 	int winner;
@@ -491,19 +546,7 @@ int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, in
 	return winner;
 }
 
-bool fullboard(int A[6][7])
-{
-    bool full = false;
-    for(int i = 0; i < 6; i++)
-    {
-        for(int j = 0; j < 7; j++)
-        {
-            if(A[i][j] == 0)
-                full = true;
-        }
-    }
-    return full;
-}
+
 
 /*---------------------------------------------------------------
 
@@ -516,33 +559,19 @@ int main()
 {
 	int option; //menu option
 	int A[6][7];
-	int scoreboard[6][4]; //= {0,1,2,3,1,4,5,1};
-	string playerboard[10]; // = { "name ", "name2 ", "name3 ","name4 ", "name5 "};
 	string one,two;
-	int k = 0;
-	int B[50];
-	string arr[20];
+	//string red, yellow;
     int mode =1;
 	int check=1;
   	bool win = false;
+  	//WORD Attributes = 0;
 
-	ifstream File;
-	File.open("scorefile.txt");
-	while(!File.eof())
-	{
-		File >> playerboard[k];
-		File >> B[k];
-		k++;
-		File >> B[k];
-		k++;
-	}
-	File.close();
-
+	//clear the board
 	for(int i=0;i<6;i++)
-	{
+	{	
 		for (int j=0;j<7;j++)
 		{
-			A[i][j]=0;
+			A[i][j]=0;		
 		}
 	}
 
@@ -550,23 +579,24 @@ int main()
 	const int PLAY_CONNECT4 = 1;
 	const int MATCH = 2;
 	const int SHOW_LEADERBOARD = 3;
-	//const int REDEFINE_USERNAMES = 3;
-	const int EXIT = 4;
-
+	const int CONNECT_5 = 4;
+	const int CONNECT_6 = 5;
+	const int EXIT = 6;
+	
 	cout << fixed << showpoint << setprecision(1); //sets to 1 decimal place
-
+	
 	do{
        showWelcome(); //show the welcome message first
-       showMenu();
+       showMenu();//show the menu option
        cin >> option;
-
+      
       //Validate menu option
       while (option < PLAY_CONNECT4 || option > EXIT)
       {
         cout << "Please enter a valid menu option: ";
         cin >> option;
       }
-
+	  
       //If user does not want to quit, proceed.
       if (option != EXIT)
       {
@@ -574,94 +604,108 @@ int main()
         {
             case PLAY_CONNECT4:
             	for(int i=0;i<6;i++)
-				{
+				{		
 					for (int j=0;j<7;j++)
 					{
-						A[i][j]=0;
+						A[i][j]=0;		
 					}
 				}
                 print_board(A);
+                
 				mode=player_mode(mode);
-
-                if (mode == 1)//mode 1- two players
+				
+				if (mode == 1)//mode 1- two players
                 {
-                    win = false;
-                    one = get_name(one);
-                    two = get_name2(two);
-                    while (!win && fullboard(A)) {
-                        if (!win) {
-                            make_move(A, one, 1);
-                            win = win_case(A, 1, one);
-                        }
-                        if (!win) {
-                            make_move(A, two, 2);
-                            win = win_case(A, 2, two);
-                        }
+                   win = false;
+                   one = get_name(one);
+                   two = get_name2(two);
+                   while (!win && fullboard(A)) 
+				   {
+                    if (!win)
+					 {
+                        make_move(A, one, 1);
+                        win = win_case(A, 1, one);
+                     }
+                    if (!win) 
+					{
+                        make_move(A, two, 2);
+                        win = win_case(A, 2, two);
                     }
+                   }
                     if (!(fullboard(A)))
                     {
                         cout << "Draw" << endl;
                     }
-                }
+
+				}
+					          
                 else if(mode == 2)//mode 2- CPU opponent
                 {
-                	one = get_name(one);
+                	one = get_name(one);	
                     human_turn(A,one);
+                      
                 }
                 else//check  for the user's input is 1 or 2
                 {
                     cout<<"Invalid mode selection! Please enter 1 or 2.";
                 }
                 break;
-
+                                                   
             case SHOW_LEADERBOARD:
-                 //showLeaderboard(int board[6][4], string player[5]);
+                 //showLeaderboard()
                  break;
-
-
+                 
+            
             case MATCH:
                  //showMatch();
                  int player1wins = 0;
 				 int player2wins = 0;
 				 int gameNum = 0;
-
+				 
 				 for(int i=0;i<6;i++)
-					{
+				 {	
 					for (int j=0;j<7;j++)
-						{
-							A[i][j]=0;
-						}
+					{
+							A[i][j]=0;		
 					}
+				 }
 				 print_board(A);
 				 one = get_name(one);
 	             two = get_name2(two);
-
+	             
 				 while((player1wins != 2 && player2wins !=2) && gameNum != 3)
 				 {
 				 	 win = false;
 				 	 for(int i=0;i<6;i++)
-					{
-					for (int j=0;j<7;j++)
+					 {	
+					    for (int j=0;j<7;j++)
 						{
-							A[i][j]=0;
+							A[i][j]=0;		
 						}
-					}
+					 }
 				 	 showMatch(A,one,two,player1wins,player2wins,gameNum,win);
 				 }
 				 if(player1wins == 2 || player2wins ==2 || gameNum == 3)
 				 {
 				 	if(player1wins == 2 || (player1wins > player2wins))
 				 		cout << one << " wins the match!" << endl;
-				 	else if(player2wins == 2 || (player2wins > player1wins))
+				 	else if(player2wins == 2 || (player2wins > player1wins)
 				 		cout << two << " wins the match!" << endl;
 				 	else
 				 		cout << "Draw" << endl;
 				 }
                  break;
-        }
+            case CONNECT_5:
+            	//CONNECT 5
+            	break;
+            case CONNECT_6:
+            	//CONNECT 6
+            	break;
+            
       }
-    } while (option != EXIT);
-
+  }
+} while (option != EXIT);
 
 	return 0;
 }
+

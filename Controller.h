@@ -5,7 +5,7 @@
 using namespace std;
 
 int command(int x);
-string sendstringmessage(string);
+string sendstringmessage(string player,int A[6][7],int check);
 string sendwinner(string);
 
 #endif

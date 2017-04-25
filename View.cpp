@@ -1,4 +1,5 @@
 #include "View.h"
+#include "View2.cpp"
 
 void printplayerone()
 {
@@ -12,7 +13,23 @@ void printplayertwo()
 
 string printplayermessage(string player)
 {
-	cout << endl<< player << ", please choose a column, numbered from left to right, to place a piece: ";
+	WORD Attributes = 0;
+	SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_RED);	
+	cout << endl<< player;
+	ResetConsoleColour(Attributes);	
+	cout << ", please choose a column, numbered from left to right, to place a piece: ";
+	
+	return player;
+}
+
+string printplayermessage2(string player)
+{
+	WORD Attributes = 0;
+	SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_GREEN);	
+	cout << endl<< player;
+	ResetConsoleColour(Attributes);	
+	cout << ", please choose a column, numbered from left to right, to place a piece: ";
+	
 	return player;
 }
 
@@ -28,7 +45,21 @@ void printsuccessfullmove()
 
 string printwinner(string player)
 {
-	cout << player << " wins!" << endl;
+	WORD Attributes = 0;
+	SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_RED);	
+	cout << endl<< player;
+	ResetConsoleColour(Attributes);	
+	cout << " wins!" << endl;
+	return player;
+}
+
+string printwinner2(string player)
+{
+	WORD Attributes = 0;
+	SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_GREEN);	
+	cout << endl<< player;
+	ResetConsoleColour(Attributes);	
+	cout << " wins!" << endl;
 	return player;
 }
 

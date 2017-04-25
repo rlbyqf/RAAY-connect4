@@ -15,15 +15,29 @@ int command(int x)
 	return x;
 }
 
-string sendstringmessage(string player)
+string sendstringmessage(string player,int A[6][7],int check)
 {
+	if(check==1)
+	{
 	printplayermessage(player);
+	}
+	if(check==2)
+	{
+		printplayermessage2(player);
+	}
 	return player;
 }
 
-string sendwinner(string player)
+string sendwinner(int board[6][7], int char_piece, string player)
 {
-	printwinner(player);
+	if(char_piece==1)
+	{
+	    printwinner(player);
+	}
+	if(char_piece==2)
+	{
+		printwinner2(player);
+	}
 	return player;
 }
 
