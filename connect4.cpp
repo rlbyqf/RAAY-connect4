@@ -662,7 +662,7 @@ bool computer_turn(int A[6][7],string player) // standard connect 4 board is 6x7
 	{
 		for(int i=5;i>-1;i--)
 			for(int j=0;j<6;j++)
-				if(A[i][j]==2&&A[i][j+1]==0&&A[i-1][j+1]!=0)
+				if(A[i][j]==2&&A[i][j+1]==0&&A[i+1][j+1]!=0)
 				{
 					A[i][j+1]=2;
 					print_board(A);
@@ -859,7 +859,7 @@ int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, in
 
 ---------------------------------------------------------------*/
 
-/*
+
 int main()
 {
 	int option; //menu option
@@ -1076,4 +1076,4 @@ int main()
 
 	return 0;
 }
-*/
+
