@@ -11,10 +11,10 @@ void showWelcome()
 {
 	WORD Attributes = 0;
     //SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
-    SetConsoleColour(&Attributes, BACKGROUND_INTENSITY | BACKGROUND_RED);
-    cout << "\nWelcome to Team RAAY's Connect4 Play Station!" << endl << endl;
+    SetConsoleColour(&Attributes, BACKGROUND_INTENSITY | BACKGROUND_GREEN);
+    cout << "\nWelcome to Team RAAY's Connect4 Play Station!";
     ResetConsoleColour(Attributes);
-	
+	cout << endl << endl;
 }
 
 //Menu Function
@@ -33,7 +33,7 @@ void showMenu()
 	cout << "  3. Show Leaderboard  " << endl;
 	ResetConsoleColour(Attributes);	
 	
-	SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_BLUE);
+	SetConsoleColour(&Attributes, FOREGROUND_INTENSITY | FOREGROUND_GREEN);
 	cout << "  4. Connect 5  " << endl;
 	ResetConsoleColour(Attributes);	
 	
@@ -1164,7 +1164,7 @@ int main()
 				}
 				if (!(fullboard3(connect6)))
 				{
-					cout << "Draw" << endl;
+					cout << "Match Draw" << endl;
 				}
 				break;
             
