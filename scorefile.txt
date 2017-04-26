@@ -1,0 +1,7 @@
+nameone 2 1
+nametwo 2 1
+namethree 1 0
+namefour 2 0
+namefive 2 0
+Anooj 1 0
+Ryan 0 0

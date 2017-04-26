@@ -2,7 +2,9 @@
 #include "Controller.cpp"
 #include "View.cpp"
 #include "time.h"
-
+#include <iostream>
+#include <fstream>
+#include <string>
 
 //welcome fucntion
 void showWelcome() 
@@ -816,6 +818,43 @@ bool fullboard3(int A[19][19])
 	return full;
 }
 
+void wincounter(int board[50], string playerwin, string playername[100],int matchtype)
+{
+	if(matchtype==1)		
+	{
+		int i = 0;
+		while (playername[i] != playerwin)
+		{
+			i++;
+		}
+		board[i]++;
+	}
+	if(matchtype==2)
+	{
+		int i = 0;
+		while (playername[i] != playerwin)
+		{
+			i++;
+		}
+		board[i+1]++;
+	}
+}
+
+void showScoreboard(int board[50], string player[100])
+{
+	cout << "-------------------------------------" << endl;
+	cout << "*         Player Scoreboard         *" << endl;
+	cout << "-------------------------------------" << endl;
+	int i=1;
+	int j=0;
+	while(player[j]!="end")
+	{
+		cout << i <<". "<< player[j] <<" "<< board[j] <<" "<< board[j+1] << endl;
+		i++;
+		j=j+2;
+	}
+}
+
 int showMatch(int A[6][7],string one, string two, int& oneWins, int& twoWins, int& games, bool win)
 {
 	int winner;
@@ -864,6 +903,13 @@ int main()
 {
 	int option; //menu option
 	int A[6][7];
+	int scoreboard[6][4]; //= {0,1,2,3,1,4,5,1};
+	string playerboard[10]; // = { "name ", "name2 ", "name3 ","name4 ", "name5 "};
+	int k = 0;
+	int B[50];
+	for (int p=0;p<50;p++)
+		B[p]=0;
+	string arr[100];
 	int connect5[6][9];
 	int connect6[19][19];
 	string one,two;
@@ -875,6 +921,20 @@ int main()
 	int player2wins = 0;
 	int gameNum = 0;
   	//WORD Attributes = 0;
+
+	fstream File;
+	File.open("scorefile.txt");
+	
+	while(!File.eof())
+	{
+		File >> arr[k]; 
+		File >> B[k]; 
+		k++;
+		File >> B[k];
+		k++;
+	}
+	arr[k]="end";
+	//File.close();	
 
 	//clear the board
 	for(int i=0;i<6;i++)
@@ -888,10 +948,11 @@ int main()
 	// constants for menu options
 	const int PLAY_CONNECT4 = 1;
 	const int MATCH = 2;
-	const int SHOW_LEADERBOARD = 3;
+	const int SHOW_SCOREBOARD = 3;
 	const int CONNECT_5 = 4;
 	const int CONNECT_6 = 5;
 	const int EXIT = 6;
+	bool namefound=false;
 	
 	cout << fixed << showpoint << setprecision(1); //sets to 1 decimal place
 	
@@ -929,18 +990,36 @@ int main()
                    win = false;
                    one = get_name(one);
                    two = get_name2(two);
+                    for(int i=0;i<100;i++)
+                    {
+                    	if(one==arr[i])
+							namefound=true;
+					}
+					if(namefound==false)
+					{
+						int r=0;
+                    	while(arr[r] != "end")
+							r=r+2;
+						arr[r-2]=one;	
+						arr[r]=two;
+						arr[r+2]="end";
+					}
                    while (!win && fullboard(A)) 
 				   {
-                    if (!win)
-					 {
+                    if (!win){
                         make_move(A, one, 1);
                         win = win_case(A, 1, one);
-                     }
-                    if (!win) 
-					{
+                    if(win){
+                        wincounter(B, one, arr, 1);
+					}
+					}
+                    if (!win) {
                         make_move(A, two, 2);
                         win = win_case(A, 2, two);
-                    }
+                    if(win){
+                        	wincounter(B, two, arr, 1);
+				    }
+				    }
                    }
                     if (!(fullboard(A)))
                     {
@@ -961,8 +1040,8 @@ int main()
                 }
                 break;
                                                    
-            case SHOW_LEADERBOARD:
-                 //showLeaderboard()
+            case SHOW_SCOREBOARD:
+                 showScoreboard(B, arr);
                  break;
                  
             
@@ -982,7 +1061,20 @@ int main()
 				 print_board(A);
 				 one = get_name(one);
 	             two = get_name2(two);
-	             
+	             for(int i=0;i<100;i++)
+                    {
+                    	if(one==arr[i])
+							namefound=true;
+					}
+					if(namefound==false)
+					{
+						int r=0;
+                    	while(arr[r] != "end")
+							r=r+2;
+						arr[r-2]=one;	
+						arr[r]=two;
+						arr[r+2]="end";
+					}
 				 while((player1wins != 2 && player2wins !=2) && gameNum != 3)
 				 {
 				 	 win = false;
@@ -998,9 +1090,15 @@ int main()
 				 if(player1wins == 2 || player2wins ==2 || gameNum == 3)
 				 {
 				 	if(player1wins == 2 || (player1wins > player2wins))
+				 	{
 				 		cout << one << " wins the match!" << endl;
+				 		wincounter(B, one, arr,2);
+				 	}
 				 	else if(player2wins == 2 || (player2wins > player1wins))
+				 	{
+				 		wincounter(B, two, arr,2);
 				 		cout << two << " wins the match!" << endl;
+				 	}
 				 	else
 				 		cout << "Draw" << endl;
 				 }
@@ -1074,6 +1172,13 @@ int main()
   }
 } while (option != EXIT);
 
+File.close();
+
+ofstream Filetwo;
+Filetwo.open("scorefile.txt",  std::fstream::out | std::fstream::app);
+Filetwo << arr[k-2] << " " << B[k-2] << " " << B[k+1-2] << endl; //print b here
+Filetwo << arr[k] << " " << B[k] << " " << B[k+1] << endl;
+Filetwo.close();
+
 	return 0;
 }
-
